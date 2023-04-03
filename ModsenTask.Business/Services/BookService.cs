@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using ModsenTask.Business.Models;
+﻿using ModsenTask.Business.Models;
 using ModsenTask.Business.Services.Interfaces;
 using ModsenTask.Data.Entities;
 using Microsoft.AspNetCore.Http;
 using ModsenTask.Data.Repositories.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using ModsenTask.Data.Repositories;
 using ModsenTask.Business.Mapper;
 
 namespace ModsenTask.Business.Services
@@ -29,17 +26,16 @@ namespace ModsenTask.Business.Services
             var email = claims.FindFirst(ClaimTypes.Email).Value;
             var bookToCreate = ApplicationMapper.Mapper.Map<Book>(book);
             var user = _userRepository.GetUserWithEmail(new User { Email = email }).Result;
-            await _bookRepository.CreateBookAsync(bookToCreate);
+            bookToCreate.UserId = user.Id;
             user.Books.Add(bookToCreate);
+            await _bookRepository.CreateBookAsync(bookToCreate);
             _bookRepository.SaveChanges();
             return ApplicationMapper.Mapper.Map<BookModel>(bookToCreate);
         }
 
-        public async Task<BookModel> DeleteBook(Guid Id)
+        public async Task<BookModel> DeleteBook(Guid id)
         {
-            var bookToDelete = await _bookRepository.GetBookByIdAsync(Id);
-            await _bookRepository.DeleteBookAsync(bookToDelete);
-            _bookRepository.SaveChanges();
+            var bookToDelete = await _bookRepository.DeleteBookAsync(id);
             return ApplicationMapper.Mapper.Map<BookModel>(bookToDelete);
         }
 
@@ -60,12 +56,10 @@ namespace ModsenTask.Business.Services
             return ApplicationMapper.Mapper.Map<BookModel>(book);
         }
 
-        public async Task<BookModel> UpdateBook(Guid bookToUpdateId, BookModel book)
+        public async Task<BookModel> UpdateBook(Guid id, BookModel book)
         {
-            var bookToUpdate = await _bookRepository.GetBookByIdAsync(bookToUpdateId);
-            var updatedBook = ApplicationMapper.Mapper.Map<Book>(book);
-            return ApplicationMapper.Mapper.Map<BookModel>(await _bookRepository.UpdateBookAsync(bookToUpdate, updatedBook));
-
+            var bookToUpdate = ApplicationMapper.Mapper.Map<Book>(book);
+            return ApplicationMapper.Mapper.Map<BookModel>(await _bookRepository.UpdateBookAsync(id,bookToUpdate));
         }
     }
 }

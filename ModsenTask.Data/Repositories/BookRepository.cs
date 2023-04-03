@@ -20,9 +20,9 @@ namespace ModsenTask.Data.Repositories
             return _context.Entry(book).Entity;
         }
 
-        public async Task<Book> DeleteBookAsync(Book book)
+        public async Task<Book> DeleteBookAsync(Guid id)
         {
-            
+            var book = await _context.Books.FirstOrDefaultAsync(x => x.Id == id);
             var deletedBook = _context.Books.Remove(book).Entity;
             await _context.SaveChangesAsync();
             return deletedBook;
@@ -30,7 +30,8 @@ namespace ModsenTask.Data.Repositories
 
         public async Task<IEnumerable<Book>> GetAllBooksAsync()
         {
-            return await _context.Books.Include(x => x.Author).Include(x => x.Genre).ToListAsync();
+            var list = await _context.Books.ToListAsync();
+            return list;
         }
 
         public async Task<Book> GetBookByIdAsync(Guid id)
@@ -43,12 +44,19 @@ namespace ModsenTask.Data.Repositories
             return await _context.Books.FirstOrDefaultAsync(x => x.ISBN == ISBN);
         }
 
-        public async Task<Book> UpdateBookAsync(Book bookToUpdate, Book updatedBook)
+        public async Task<Book> UpdateBookAsync(Guid id,Book book)
         {
-            _context.Entry(bookToUpdate).CurrentValues
-                .SetValues(updatedBook);
+            var originalbook = await _context.Books.FirstOrDefaultAsync(x => x.Id == id);
+            originalbook.Author = book.Author;
+            originalbook.ISBN = book.ISBN;
+            originalbook.NeedBookToReturn = book.NeedBookToReturn;
+            originalbook.Description = book.Description;
+            originalbook.Genre = book.Genre;
+            originalbook.TakenBookTime = book.TakenBookTime;
+            originalbook.Name = book.Name;
+            _context.Books.Update(originalbook);
             await _context.SaveChangesAsync();
-            return _context.Entry(bookToUpdate).Entity;
+            return originalbook;
         }
         public void SaveChanges()
         {

@@ -8,8 +8,8 @@ namespace ModsenTask.Data.Repositories.Interfaces
         Task<Book> GetBookByIdAsync(Guid id);
         Task<Book> CreateBookAsync(Book book);
         Task<Book> GetBookByISBNAsync(string ISBN);
-        Task<Book> UpdateBookAsync (Book bookToUpdate, Book updatedBook);
-        Task<Book> DeleteBookAsync (Book id);
+        Task<Book> UpdateBookAsync (Guid id, Book book);
+        Task<Book> DeleteBookAsync (Guid id);
         void SaveChanges();
     }
 }

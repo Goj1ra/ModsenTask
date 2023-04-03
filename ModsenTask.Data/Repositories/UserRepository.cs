@@ -2,7 +2,7 @@
 using ModsenTask.Data.Data;
 using ModsenTask.Data.Entities;
 using ModsenTask.Data.Repositories.Interfaces;
-
+using System.Security.Cryptography.X509Certificates;
 
 namespace ModsenTask.Data.Repositories
 {
@@ -23,7 +23,7 @@ namespace ModsenTask.Data.Repositories
 
         public async Task<User> GetUserWithEmail(User user)
         {
-            var userWithEmail = await _context.Users.FirstOrDefaultAsync(x => x.Email == user.Email);
+            var userWithEmail = _context.Users.FindAsync(user.Email).Result;
             return userWithEmail;
 
         }

@@ -46,14 +46,11 @@ namespace ModsenTask.Business.Services
             {
                 var user = ApplicationMapper.Mapper.Map<User>(userModel);
                 var userToFind = _userRepository.GetUserWithEmail(user);
-                if (userToFind == null)
-                {
-                    user.PasswordHash = BCryptNet.HashPassword(userModel.Password);
-                    user.PasswordSalt = BCryptNet.GenerateSalt();
-                    await _userRepository.Register(user);
-                    return userModel;
-                }
-                return null;
+                user.PasswordHash = BCryptNet.HashPassword(userModel.Password);
+                user.PasswordSalt = BCryptNet.GenerateSalt();
+                await _userRepository.Register(user);
+                return userModel;
+
             }
             catch (Exception ex)
             {

@@ -1,10 +1,8 @@
-﻿using ModsenTask.Data.Entities;
-
-namespace ModsenTask.API.ViewModels
+﻿namespace ModsenTask.API.ViewModels
 {
     public class BookViewModel
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = new Guid();
         public string ISBN { get; set; }
         public string Author { get; set; }
         public string Genre { get; set; }

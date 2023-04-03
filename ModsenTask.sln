@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModsenTask.Data", "ModsenTa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModsenTask.API", "ModsenTask.API\ModsenTask.API.csproj", "{135DA76B-B95B-413D-9363-3023204339E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModsenTask.IdentityServer", "ModsenTask.IdentityServer\ModsenTask.IdentityServer.csproj", "{70EBCBDA-A9FA-4FC6-AEF0-6B0BD6D0F21E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{135DA76B-B95B-413D-9363-3023204339E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{135DA76B-B95B-413D-9363-3023204339E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{135DA76B-B95B-413D-9363-3023204339E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70EBCBDA-A9FA-4FC6-AEF0-6B0BD6D0F21E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70EBCBDA-A9FA-4FC6-AEF0-6B0BD6D0F21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70EBCBDA-A9FA-4FC6-AEF0-6B0BD6D0F21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70EBCBDA-A9FA-4FC6-AEF0-6B0BD6D0F21E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

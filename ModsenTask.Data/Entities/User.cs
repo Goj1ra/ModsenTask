@@ -11,5 +11,10 @@ namespace ModsenTask.Data.Entities
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public ICollection<Book> Books { get; set; }
+
+        public User()
+        {
+            Books = new List<Book>();
+        }
     }
 }

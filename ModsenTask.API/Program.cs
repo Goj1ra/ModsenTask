@@ -2,15 +2,11 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using ModsenTask.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using ModsenTask.Business.Extensions;
 using ModsenTask.API.Extensions;
-using ModsenTask.Business.Services.Interfaces;
-using ModsenTask.Business.Services;
-using ModsenTask.Data.Repositories.Interfaces;
-using ModsenTask.Data.Repositories;
 using NLog;
+using ModsenTask.Data.Extensions;
 
 namespace ModsenTask.API;
 
@@ -71,15 +67,14 @@ public class Program
 
         builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-          options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Services.AddApplicationDbContext(builder.Configuration.GetConnectionString("DefaultConnection"));
 
+       
         builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        builder.Services.AddScoped<IUserRepository, UserRepository>();
-        builder.Services.AddScoped<IBookRepository, BookRepository>();
-        builder.Services.AddScoped<IUserService, UserService>();
-        builder.Services.AddScoped<IBookService, BookService>();
-        
+
+        builder.Services.AddRepositories();
+
+        builder.Services.AddServices();
 
         builder.Services.AddLoggerService();
         builder.Services.AddCustomExceptionHandler();

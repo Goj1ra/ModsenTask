@@ -41,12 +41,11 @@ namespace ModsenTask.API.Controllers
 
         [Route("~/api/DeleteBook")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteBook([FromBody] BookViewModel bookViewModel)
+        public async Task<IActionResult> DeleteBook(Guid id)
         {
             try
             {
-                var book = ApiMapper.Mapper.Map<BookModel>(bookViewModel);
-                var response = await _bookService.DeleteBook(book.Id);
+                var response = await _bookService.DeleteBook(id);
                 var apiResult = ApiResult<BookModel>.Success(response);
                 return Ok(apiResult);
             }
@@ -77,12 +76,11 @@ namespace ModsenTask.API.Controllers
 
         [Route("~/api/GetBookById")]
         [HttpGet]
-        public async Task<IActionResult> GetBookById([FromBody] BookViewModel bookViewModel)
+        public async Task<IActionResult> GetBookById(Guid id)
         {
             try
             {
-                var book = ApiMapper.Mapper.Map<BookModel>(bookViewModel);
-                var response = await _bookService.GetBookById(book.Id);
+                var response = await _bookService.GetBookById(id);
                 var apiResult = ApiResult<BookModel>.Success(response);
                 return Ok(apiResult);
             }
@@ -95,12 +93,11 @@ namespace ModsenTask.API.Controllers
 
         [Route("~/api/GetBookByISBN")]
         [HttpGet]
-        public async Task<IActionResult> GetBookByISBN([FromBody] BookViewModel bookViewModel)
+        public async Task<IActionResult> GetBookByISBN(string iSBN)
         {
             try
             {
-                var book = ApplicationMapper.Mapper.Map<BookModel>(bookViewModel);
-                var response = await _bookService.GetBookByISBN(book.ISBN);
+                var response = await _bookService.GetBookByISBN(iSBN);
                 var apiResult = ApiResult<BookModel>.Success(response);
                 return Ok(apiResult);
             }
@@ -113,12 +110,12 @@ namespace ModsenTask.API.Controllers
 
         [Route("~/api/UpdateBook")]
         [HttpPut]
-        public async Task<IActionResult> UpdateBook(Guid Id, [FromBody] BookViewModel bookViewModel)
+        public async Task<IActionResult> UpdateBook(Guid id,[FromBody] BookViewModel bookViewModel)
         {
             try
             {
                 var book = ApiMapper.Mapper.Map<BookModel>(bookViewModel);
-                var response = await _bookService.UpdateBook(Id, book);
+                var response = await _bookService.UpdateBook(id, book);
                 var apiResult = ApiResult<BookModel>.Success(response);
                 return Ok(apiResult);
             }
